@@ -1,0 +1,12 @@
+header img {
+    width: 85px;
+}
+
+.header {
+    grid-area: h;
+    background-color: green;
+}
+
+.img_logo {
+    width: 85px;
+}
