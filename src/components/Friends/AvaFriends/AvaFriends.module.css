@@ -1,0 +1,15 @@
+.item {
+    color: orangered;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.imgg {
+    width: 45px;
+    border-radius: 40% ;
+}
+
+.pree {
+    color: orangered;
+    font-size: 39px;
+}

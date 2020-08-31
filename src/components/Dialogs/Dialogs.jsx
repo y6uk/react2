@@ -1,59 +1,53 @@
 import React from "react";
 import s from './Dialogs.module.css';
-import {NavLink} from "react-router-dom";
-
-const DialogItem = (props) => {
-    let path = "/dialogs/" + props.id;
-
-    return (
-        <div className={s.dialog + ' ' + s.active}>
-            <NavLink to={path}>{props.name}</NavLink>
-        </div>
-    )
-};
-
-const MessageItem = (props) => {
-    return (
-        <div>
-            <div className={s.message}>{props.message}</div>
-        </div>
-    )
-};
+import DialogsItem from './DialogItem/DialogsItem'
+import Message from './Message/MessageItem';
+import {addMessageActionCreator, onMessageChangeActionCreator} from "../../redux/dialogs-reducer";
 
 
 
 const Dialogs = (props) => {
+    debugger
+    //let state = props.dialogsPage;
 
-    let dialogsData = [
-        {id: 1, name: 'Igor'},
-        {id: 2, name: 'Yana'},
-        {id: 3, name: 'John'},
-        {id: 4, name: 'Donald'}
-    ]
+    let dialogsElements = props.dialogs.map(d => <DialogsItem name={d.name} key={d.id} id={d.id}/>);
+    let messagesElements = props.messages.map(m => <Message message={m.message} key={m.id}/>);
+    let newMessageText = props.newMessageText;
 
-    let messagesData = [
-        {id: 1, message: 'Hi'},
-        {id: 2, message: 'Hello'},
-        {id: 3, message: 'Yooo man'},
-        {id: 4, message: 'priv'}
-    ]
+    let newMessageElement = React.createRef();
+
+    let addMessage = () => {
+        props.addMessageAction()
+    }
+
+    /*let onMessageChange = (e) => {
+        let text1 = e.target.value;
+        props.onMessageChangeAction(text1)
+
+    }*/
+
+    let onMessageChange = () => {
+        let text1 = newMessageElement.current.value;
+        props.onMessageChangeAction(text1)
+
+    }
 
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
-                <DialogItem name={dialogsData[0].name} id={dialogsData[0].id} />
-                <DialogItem name="Yana" id="2"/>
-                <DialogItem name="John" id="3"/>
-                <DialogItem name="Donald" id="4"/>
+                {dialogsElements}
             </div>
             <div className={s.messages}>
-                <MessageItem message={messagesData[0].message} id={messagesData[0].id}/>
-                <MessageItem message={messagesData[1].message} id={messagesData[1].id}/>
-                <MessageItem message="Yooo man"/>
-                <MessageItem message="priv"/>
+                {messagesElements}
+                <div>
+                    <textarea onChange={onMessageChange}
+                              ref={newMessageElement}
+                              value={props.newMessageText}/>
+                </div>
+                <button onClick={addMessage}>send</button>
             </div>
         </div>
     )
-};
+}
 
 export default Dialogs;
