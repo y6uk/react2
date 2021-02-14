@@ -4,22 +4,22 @@ import AvaFriends from "./AvaFriends/AvaFriends";
 
 
 const Friends = (props) => {
-   /* debugger;*/
+    /* debugger;*/
     let avatar = [
-        {name: 'Igor', id: 1},
-        {name: 'Yana', id: 2},
-        {name: 'John', id: 3},
-        {name: 'Donald', id: 4}
+        { name: 'Igor', id: 1 },
+        { name: 'Arnold', id: 2 },
+        { name: 'John', id: 3 },
+        { name: 'Donald', id: 4 }
     ]
 
-    let avaElements = avatar.map(av => <AvaFriends name={av.name} id={av.id}/>);
+    let avaElements = avatar.map(av => <AvaFriends name={av.name} id={av.id} />);
     return (
         <div>
             <span className={s.pree}>Friends</span>
-            <span>{ props.name }</span>
+            <span>{props.name}</span>
 
             <div className={s.posts}>
-                { avaElements }
+                {avaElements}
             </div>
         </div>
     )

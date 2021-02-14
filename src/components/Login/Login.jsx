@@ -11,9 +11,9 @@ import style from "./../common/FormsControls/FormsControls.module.css"
 const maxLength20 = maxLengthCreator(20)
 const maxLength15 = maxLengthCreator(15)
 
-const LoginForm = (props) => {
+const LoginForm = ({handleSubmit, error, captchaUrl}) => {
     return (
-            <form onSubmit={props.handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <div>
                     <Field placeholder={"Email"} name={"email"} component={Input}
                            validate={[required, maxLength20]} />
@@ -25,8 +25,11 @@ const LoginForm = (props) => {
                 <div>
                     <Field type={"checkbox"} name={"rememberMe"} component={Input}/> Remember me
                 </div>
-                { props.error && <div className={style.formSummaryError}>
-                    {props.error}
+
+                { captchaUrl && <img src={captchaUrl}/>}
+
+                { error && <div className={style.formSummaryError}>
+                    {error}
                 </div> }
                 <div>
                     <button>Login</button>
@@ -50,11 +53,12 @@ const Login = (props) => {
 
     return <div>
         <h1>Login</h1>
-        <LoginReduxForm onSubmit={onSubmit}/>
+        <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/>
     </div>
 }
 
 const mapStateToProps = (state) => ({
+    captchaUrl: state.auth.captchaUrl,
     isAuth: state.auth.isAuth
 })
 
