@@ -1,18 +1,18 @@
 .paginator {
-    margin: 10px;
+  margin: 10px;
 }
 
 .pageNumber {
-    padding: 2px;
-    border: 1px solid gray;
+  padding: 2px;
+  border: 1px solid gray;
 }
 
 .pageNumber.selectedPage {
-    font-weight: bold;
-    border-color: black;
+  font-weight: bold;
+  border-color: black;
 }
 
 .selectedPage {
-    font-size: 25px;
-    font-weight: bold;
+  font-size: 25px;
+  font-weight: bold;
 }
