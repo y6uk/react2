@@ -7,6 +7,7 @@ import {
   ContactsType,
   PhotosType,
 } from '../types/types'
+import { Dispatch } from 'redux'
 
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
@@ -30,7 +31,7 @@ export type InitialStateType = typeof initialState
 
 const profileReducer = (
   state = initialState,
-  action: any
+  action: ActionsTypes
 ): InitialStateType => {
   switch (action.type) {
     case ADD_POST: {
@@ -70,6 +71,14 @@ const profileReducer = (
       return state
   }
 }
+
+type ActionsTypes =
+  | AddPostActionCreatorActionType
+  | SetUserProfileActionType
+  | DeletePostActionType
+  | SavePhoteActionType
+  | SetStatusActionType
+
 type AddPostActionCreatorActionType = {
   type: typeof ADD_POST
   newPostText: string
@@ -91,6 +100,7 @@ type SetUserProfileActionType = {
 export const setUserProfile = (
   profile: ProfileType
 ): SetUserProfileActionType => ({ type: SET_USER_PROFILE, profile })
+
 type SetStatusActionType = {
   type: typeof SET_STATUS
   status: string
@@ -119,16 +129,22 @@ export const savePhotoSuccess = (photos: PhotosType): SavePhoteActionType => ({
   photos,
 })
 
-export const getUserProfile = (userId: number) => async (dispatch: any) => {
+type DispatchType = Dispatch<ActionsTypes>
+
+export const getUserProfile = (userId: number) => async (
+  dispatch: DispatchType
+) => {
   let response = await usersAPI.getProfile(userId)
   dispatch(setUserProfile(response.data))
 }
-export const getStatus = (userId: number) => async (dispatch: any) => {
+export const getStatus = (userId: number) => async (dispatch: DispatchType) => {
   let response = await profileAPI.getStatus(userId)
   dispatch(setStatus(response.data))
 }
 
-export const updateStatus = (status: string) => async (dispatch: any) => {
+export const updateStatus = (status: string) => async (
+  dispatch: DispatchType
+) => {
   let response = await profileAPI.updateStatus(status)
   if (response.data.resultCode === 0) {
     dispatch(setStatus(status))
